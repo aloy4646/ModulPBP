@@ -66,7 +66,7 @@ func InsertNewUser(w http.ResponseWriter, r *http.Request) {
 	email := r.Form.Get("email")
 	password := r.Form.Get("password")
 
-	resultQuery, errQuery := db.Exec("INSERT INTO users (name, age, address,email,password) VALUES (?,?,?)",
+	resultQuery, errQuery := db.Exec("INSERT INTO users (name, age, address,email,password) VALUES (?,?,?,?,?)",
 		name,
 		age,
 		address,
@@ -82,7 +82,7 @@ func InsertNewUser(w http.ResponseWriter, r *http.Request) {
 
 	id, _ := resultQuery.LastInsertId()
 	var response UserResponse
-	var user User = User{Id: int(id), Name: name, Age: age, Address: address}
+	var user User = User{Id: int(id), Name: name, Age: age, Address: address, Email: email, Password: password}
 	response.Status = 200
 	response.Message = "Succes"
 	response.Data = user
